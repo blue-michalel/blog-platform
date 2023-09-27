@@ -15,7 +15,7 @@ module.exports = {
       }
     }
   ],
-  ignorePatterns: ['./.eslintrc.js'],
+  ignorePatterns: ['./.eslintrc.js', './api/*.ts'],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module'
