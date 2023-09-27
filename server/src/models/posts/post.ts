@@ -1,13 +1,26 @@
-import * as joi from '@hapi/joi';
-import { timestamp } from '../utils/time';
+import { type JSONSchemaType } from 'ajv';
 
-export const schema = joi.object({
-  updateTime: joi.string(),
-  tags: [joi.string()],
-  short: joi.string(),
-  createTime: timestamp,
-  title: joi.string(),
-  content: joi.string(),
-});
+import { type Timestamp } from '../utils/time';
 
-export type Post = joi.extractType<typeof schema>;
+export interface Post {
+  updateTime: string;
+  tags: string[];
+  short: string;
+  createTime: Timestamp;
+  title: string;
+  content: string;
+}
+
+export type NewPost = Omit<Post, 'updateTime' | 'createTime'>;
+
+export const schema: JSONSchemaType<NewPost> = {
+  type: 'object',
+  properties: {
+    content: { type: 'string' },
+    short: { type: 'string' },
+    tags: { type: 'array', items: { type: 'string' } },
+    title: { type: 'string' }
+  },
+  required: ['content', 'short', 'tags', 'title'],
+  additionalProperties: false
+};

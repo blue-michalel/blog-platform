@@ -1,6 +1,5 @@
 import 'dotenv/config';
 import express, { type Response } from 'express';
-import 'joi-extract-type';
 import 'reflect-metadata';
 import { useExpressServer } from 'routing-controllers';
 
