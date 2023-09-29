@@ -11,5 +11,10 @@
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true,
   "plugins": ["@trivago/prettier-plugin-sort-imports"],
-  "trailingComma": "none"
+  "trailingComma": "none",
+  "importOrderParserPlugins": [
+    "typescript",
+    "classProperties",
+    "[\"decorators-legacy\", { \"decoratorsBeforeExport\": true }]"
+  ]
 }
