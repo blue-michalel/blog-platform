@@ -1,30 +1,38 @@
+import { instanceToPlain, plainToInstance } from 'class-transformer';
+import { validate } from 'class-validator';
+import { firestore } from 'firebase-admin';
 import { Body, Get, HttpCode, JsonController, Post } from 'routing-controllers';
-import firebaseController from './firebase.controller';
+import { ResponseSchema } from 'routing-controllers-openapi';
 
-import { Post as PostI, schema } from '../models/posts/post';
-import { ValidationError } from '../errors/CatchError';
-import Ajv from 'ajv';
-import { VALIDATION_ERROR, ADDED_SUCCESSFULLY } from '../constants/text';
+import { ADDED_SUCCESSFULLY, VALIDATION_ERROR } from '../constants/text';
+import database from '../database';
+import { ValidationError } from '../errors/ValidationError';
+import { CreatePost, Post as PostResponse } from '../models/posts';
 
 @JsonController('/posts')
 export default class PostController {
-  @Get('/')
+  @Get()
+  @ResponseSchema(PostResponse, { isArray: true })
   async getAll() {
-    const data = await firebaseController.getCollection('posts');
+    const data = await database.getCollection('posts');
 
     return data;
   }
 
   @HttpCode(201)
-  @Post('/')
-  async createPost(@Body({ required: true }) post: PostI) {
-    const ajv = new Ajv();
-    const validate = ajv.compile(schema);
-    const isValid = validate(post);
-    if (!isValid) {
-      throw new ValidationError(VALIDATION_ERROR, validate.errors);
+  @Post()
+  async createPost(@Body({ required: true }) data: CreatePost) {
+    const newPost = plainToInstance(CreatePost, data);
+    const errors = await validate(newPost);
+
+    if (errors.length !== 0) {
+      throw new ValidationError(VALIDATION_ERROR, errors);
     }
-    const { id } = await firebaseController.createDocument('posts', post);
+
+    const postWithTimeStamp = plainToInstance(PostResponse, data);
+    postWithTimeStamp.createTime = firestore.FieldValue.serverTimestamp();
+
+    const { id } = await database.createDocument('posts', instanceToPlain(newPost));
 
     return { msg: ADDED_SUCCESSFULLY, id };
   }

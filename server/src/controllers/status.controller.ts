@@ -1,6 +1,6 @@
 import { Get, JsonController } from 'routing-controllers';
 
-@JsonController('/')
+@JsonController('/status')
 export default class StatusController {
   @Get()
   getStatus() {

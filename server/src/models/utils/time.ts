@@ -1,4 +1,3 @@
-export interface Timestamp {
-  seconds: number;
-  nanoseconds: number;
-}
+import { type FieldValue } from 'firebase/firestore';
+
+export type Timestamp = FieldValue;

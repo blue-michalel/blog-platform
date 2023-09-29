@@ -1,7 +1,7 @@
-import { Post } from './posts/post';
+import { type Post } from './posts';
 
 export interface AppCollectionsData {
-  posts: Post;
+  posts: Post | unknown;
 }
 
 export type AppCollectionsNames = keyof AppCollectionsData;

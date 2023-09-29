@@ -1,19 +1,23 @@
 import 'dotenv/config';
 import express, { type Response } from 'express';
-import 'reflect-metadata';
-import { useExpressServer } from 'routing-controllers';
+import { type RoutingControllersOptions, useExpressServer } from 'routing-controllers';
+import swaggerUiExpress from 'swagger-ui-express';
 
 import PostController from './controllers/post.controllers';
 import StatusController from './controllers/status.controller';
+import { createRoutingControllersToSpec } from './docs/swagger';
 
 const app = express();
-const version = process.env.CONFIG_API_VERSION;
+const version = process.env.CONFIG_API_VERSION ?? 'aaa';
 const routePrefix = `/api/v${version}`;
+const docEP = '/docs';
 
-useExpressServer(app, {
+const options: RoutingControllersOptions = {
   routePrefix,
   controllers: [StatusController, PostController]
-});
+};
+
+useExpressServer(app, options);
 
 const port = process.env.PORT ?? 3000;
 
@@ -22,7 +26,11 @@ app.listen(port, () => {
 });
 
 app.get('/', (_, res: Response) => {
-  res.redirect(routePrefix);
+  res.redirect(docEP);
 });
+
+const spec = createRoutingControllersToSpec(options);
+
+app.use(docEP, swaggerUiExpress.serve, swaggerUiExpress.setup(spec));
 
 export default app;

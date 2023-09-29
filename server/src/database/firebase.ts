@@ -7,11 +7,11 @@ import {
   getDocs
 } from 'firebase/firestore';
 
-import db from '../firebase';
+import { PermissionDenied } from '../errors/PermissionDenied';
 import { type AppCollectionsData, type AppCollectionsNames } from '../models/database';
-import { type Post } from '../models/posts/post';
+import db from './config';
 
-class FirebaseController {
+class FirebaseDataBase {
   constructor(private readonly db: Firestore) {}
 
   getCollection = async (collectionName: AppCollectionsNames) => {
@@ -23,9 +23,13 @@ class FirebaseController {
     return data;
   };
 
-  createDocument = async <T extends Post>(collectionName: AppCollectionsNames, data: WithFieldValue<T>) => {
+  createDocument = async <T>(collectionName: AppCollectionsNames, data: WithFieldValue<T>) => {
     const col = this.getCollectionRef(collectionName);
-    return await addDoc(col, data);
+    try {
+      return await addDoc(col, data);
+    } catch (error) {
+      throw new PermissionDenied('Forbidden');
+    }
   };
 
   private getCollectionRef(collectionName: AppCollectionsNames) {
@@ -33,5 +37,5 @@ class FirebaseController {
   }
 }
 
-const firebaseController = new FirebaseController(db);
-export default firebaseController;
+const firebaseDataBase = new FirebaseDataBase(db);
+export default firebaseDataBase;
