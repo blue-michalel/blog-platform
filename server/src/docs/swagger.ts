@@ -1,6 +1,7 @@
 import { validationMetadatasToSchemas } from 'class-validator-jsonschema';
 import { type RoutingControllersOptions, getMetadataArgsStorage } from 'routing-controllers';
 import { routingControllersToSpec } from 'routing-controllers-openapi';
+import 'swagger-ui-dist';
 
 import { version } from '../../package.json';
 

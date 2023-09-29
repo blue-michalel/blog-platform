@@ -42,6 +42,7 @@
     "firebase-admin": "^11.10.1",
     "routing-controllers": "^0.10.4",
     "routing-controllers-openapi": "^4.0.0",
+    "swagger-ui-dist": "^5.9.0",
     "swagger-ui-express": "^5.0.0"
   }
 }
