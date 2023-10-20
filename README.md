@@ -2,7 +2,7 @@
   <h3 align="center">Blog platform</h3>
   <p align="center">
     <a href="https://blog-platform-server.vercel.app/">Backend Demo</a>
-    <a href="#">Fronted Demo</a>
+    <a href="https://blog-platform-frontend.vercel.app/">Fronted Demo</a>
   </p>
 </p>
 
