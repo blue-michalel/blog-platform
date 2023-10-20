@@ -47,7 +47,7 @@ class FirebaseDataBase {
     const element = doc(this.db, collectionName, id);
     const snap = getDoc(element);
 
-    return (await snap).data;
+    return (await snap).data();
   };
 
   createDocument = async <T>(collectionName: AppCollectionsNames, data: WithFieldValue<T>) => {
