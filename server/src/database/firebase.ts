@@ -4,6 +4,8 @@ import {
   type WithFieldValue,
   addDoc,
   collection,
+  doc,
+  getDoc,
   getDocs
 } from 'firebase/firestore';
 
@@ -14,13 +16,38 @@ import db from './config';
 class FirebaseDataBase {
   constructor(private readonly db: Firestore) {}
 
-  getCollection = async (collectionName: AppCollectionsNames) => {
+  getCollection = async (collectionName: AppCollectionsNames, fields?: string[]) => {
     const col = this.getCollectionRef(collectionName);
     const snapshot = await getDocs(col);
     const docs = snapshot.docs;
 
-    const data = docs.map((doc) => doc.data());
+    const data = docs.map((doc) => {
+      if (fields != null) {
+        const data = fields.reduce<Record<string, unknown>>((acc, key) => {
+          acc[key] = doc.get(key);
+          return acc;
+        }, {});
+
+        return {
+          ...data,
+          id: doc.id
+        };
+      }
+
+      return {
+        ...(doc.data() as Record<string, unknown>),
+        id: doc.id
+      };
+    });
+
     return data;
+  };
+
+  getDocument = async (collectionName: AppCollectionsNames, id: string) => {
+    const element = doc(this.db, collectionName, id);
+    const snap = getDoc(element);
+
+    return (await snap).data;
   };
 
   createDocument = async <T>(collectionName: AppCollectionsNames, data: WithFieldValue<T>) => {
