@@ -1,3 +1,4 @@
+import cors from 'cors';
 import 'dotenv/config';
 import express, { type Response } from 'express';
 import { type RoutingControllersOptions, useExpressServer } from 'routing-controllers';
@@ -17,6 +18,7 @@ const options: RoutingControllersOptions = {
   controllers: [StatusController, PostController]
 };
 
+app.use(cors());
 useExpressServer(app, options);
 
 const port = process.env.PORT ?? 3000;
