@@ -1,10 +1,6 @@
-import React from 'react';
-
+/* eslint-disable react/react-in-jsx-scope */
 import Router from './router';
 import { CssBaseline } from '@mui/material';
-import { QueryClient, QueryClientProvider } from 'react-query';
-
-const queryClient = new QueryClient();
 
 function App() {
   return (
