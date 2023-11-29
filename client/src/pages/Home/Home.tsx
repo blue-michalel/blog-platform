@@ -4,11 +4,11 @@ import { withLayout } from 'containers/Layout';
 import { Post } from './components/Post';
 
 import { Backdrop, CircularProgress } from '@mui/material';
-import { selectData, selectFetchAll, selectLoading, usePostState } from 'store/posts';
+import { selectPosts, selectFetchAll, selectLoading, usePostState } from 'store/posts';
 
 const Home: React.FC = React.memo(() => {
   const fetch = usePostState(selectFetchAll);
-  const data = usePostState(selectData);
+  const data = usePostState(selectPosts);
   const isLoading = usePostState(selectLoading);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const Home: React.FC = React.memo(() => {
     );
   }
 
-  return data.map(({ id, ...data }) => <Post key={id} data={data} />);
+  return data.map(({ id, ...data }) => <Post key={id} data={data} id={id} />);
 });
 
 Home.displayName = 'Home';

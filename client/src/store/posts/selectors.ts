@@ -1,7 +1,14 @@
 import { PostState } from './posts';
+import { FilterPostState } from './filter';
 
-export const selectLoading = (state: PostState) => state.loading;
+type CommonState = PostState | FilterPostState;
 
-export const selectData = (state: PostState) => state.data;
+export const selectLoading = (state: CommonState) => state.loading;
+
+export const selectPosts = (state: PostState) => state.data;
+
+export const selectPost = (state: FilterPostState) => state.data;
 
 export const selectFetchAll = (state: PostState) => state.fetchAll;
+
+export const selectFetchPost = (state: FilterPostState) => state.fetch;

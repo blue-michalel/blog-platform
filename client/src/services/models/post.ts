@@ -1,9 +1,10 @@
 import { CreateTime } from './utils';
 
 export interface Post {
-  short: string;
+  content: string;
   createTime: CreateTime;
+  id: string;
+  short: string;
   tags: string[];
   title: string;
-  id: string;
 }

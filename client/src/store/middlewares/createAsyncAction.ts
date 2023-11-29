@@ -11,7 +11,6 @@ export const createAsyncAction =
     } catch (error) {
       set({ error });
       onError?.();
-      console.log('error', error);
     } finally {
       set({ loading: false });
     }

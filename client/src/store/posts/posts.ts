@@ -6,6 +6,8 @@ import { AxiosError } from 'axios';
 import postApi from 'services/api/services/post';
 import { Post } from 'services/models';
 
+const name = '@store/post/all';
+
 export type PostState = {
   loading: boolean;
   data: Post[];
@@ -28,4 +30,4 @@ const store = (set: SetState): PostState => ({
   fetchAll: fetchAllAction(set),
 });
 
-export const usePostState = create<PostState>()(devtools(persist(store, { name: 'postStore' })));
+export const usePostState = create(devtools(persist(store, { name }), { name }));
