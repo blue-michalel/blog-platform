@@ -4,8 +4,7 @@ import express, { type Response } from 'express';
 import { type RoutingControllersOptions, useExpressServer } from 'routing-controllers';
 import swaggerUiExpress from 'swagger-ui-express';
 
-import PostController from './controllers/post.controllers';
-import StatusController from './controllers/status.controller';
+import { controllers } from './controllers';
 import { createRoutingControllersToSpec } from './docs/swagger';
 
 const app = express();
@@ -15,7 +14,7 @@ const docEP = '/docs';
 
 const options: RoutingControllersOptions = {
   routePrefix,
-  controllers: [StatusController, PostController]
+  controllers
 };
 
 app.use(cors());

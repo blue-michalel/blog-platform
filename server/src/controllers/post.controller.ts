@@ -1,10 +1,9 @@
-import { instanceToPlain, plainToInstance } from 'class-transformer';
-import { validate } from 'class-validator';
+import { plainToInstance } from 'class-transformer';
 import { firestore } from 'firebase-admin';
 import { Body, Get, HttpCode, JsonController, Param, Post } from 'routing-controllers';
 import { ResponseSchema } from 'routing-controllers-openapi';
 
-import { ADDED_SUCCESSFULLY, VALIDATION_ERROR } from '../constants/text';
+import { ADDED_SUCCESSFULLY } from '../constants/text';
 import database from '../database';
 import { ValidationError } from '../errors/ValidationError';
 import { CreatePost, PostAll, Post as PostResponse } from '../models/posts';
@@ -31,17 +30,12 @@ export default class PostController {
   @HttpCode(201)
   @Post()
   async createPost(@Body({ required: true }) data: CreatePost) {
-    const newPost = plainToInstance(CreatePost, data);
-    const errors = await validate(newPost);
-
-    if (errors.length !== 0) {
-      throw new ValidationError(VALIDATION_ERROR, errors);
-    }
+    await ValidationError.asserType(CreatePost, data);
 
     const postWithTimeStamp = plainToInstance(PostResponse, data);
     postWithTimeStamp.createTime = firestore.FieldValue.serverTimestamp();
 
-    const { id } = await database.createDocument('posts', instanceToPlain(newPost));
+    const { id } = await database.createDocument('posts', data);
 
     return { msg: ADDED_SUCCESSFULLY, id };
   }
