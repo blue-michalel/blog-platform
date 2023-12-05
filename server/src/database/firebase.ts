@@ -1,12 +1,15 @@
 import {
   type CollectionReference,
+  type DocumentData,
+  type DocumentReference,
   type Firestore,
   type WithFieldValue,
   addDoc,
   collection,
   doc,
   getDoc,
-  getDocs
+  getDocs,
+  setDoc
 } from 'firebase/firestore';
 
 import { PermissionDenied } from '../errors/PermissionDenied';
@@ -43,17 +46,26 @@ class FirebaseDataBase {
     return data;
   };
 
-  getDocument = async (collectionName: AppCollectionsNames, id: string) => {
+  getDocument = async <T extends DocumentData>(collectionName: AppCollectionsNames, id: string) => {
     const element = doc(this.db, collectionName, id);
     const snap = getDoc(element);
 
-    return (await snap).data();
+    return (await snap).data() as T;
   };
 
-  createDocument = async <T>(collectionName: AppCollectionsNames, data: WithFieldValue<T>) => {
+  createDocument = async <T, R>(
+    collectionName: AppCollectionsNames,
+    data: WithFieldValue<T>,
+    id?: R
+  ): Promise<CreateDocument<R>> => {
     const col = this.getCollectionRef(collectionName);
     try {
-      return await addDoc(col, data);
+      if (typeof id === 'string') {
+        await setDoc(doc(col, id), data);
+        return undefined as CreateDocument<R>;
+      }
+
+      return (await addDoc(col, data)) as CreateDocument<R>;
     } catch (error) {
       throw new PermissionDenied('Forbidden');
     }
@@ -66,3 +78,5 @@ class FirebaseDataBase {
 
 const firebaseDataBase = new FirebaseDataBase(db);
 export default firebaseDataBase;
+
+type CreateDocument<T> = T extends string ? undefined : DocumentReference<unknown, DocumentData>;

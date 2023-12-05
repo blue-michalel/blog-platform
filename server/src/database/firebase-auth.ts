@@ -9,6 +9,7 @@ import {
 import { LOGOUT } from '../constants/text';
 import { Unauthorized } from '../errors/Unauthorized';
 import { type UserCreate, type UserLogin } from '../models/authentication';
+import { type UserInfo } from '../models/user/info';
 import auth from './auth';
 
 class FirebaseAuth {
@@ -49,7 +50,7 @@ class FirebaseAuth {
     return await this.getUserInfo(user);
   };
 
-  private async getUserInfo(user: User) {
+  private async getUserInfo(user: User): Promise<UserInfo> {
     const { uid, displayName, emailVerified } = user;
     const token = await user.getIdToken();
 
