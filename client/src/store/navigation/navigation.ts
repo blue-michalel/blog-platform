@@ -15,7 +15,7 @@ type SetState = StoreApi<NavigationState>['setState'];
 
 const store = (set: SetState): NavigationState => ({
   clearError: () => set({ activeErrorPage: undefined }),
-  redirectToError: (route: ErrorsRoutes) => set({ activeErrorPage: route }),
+  redirectToError: (route: ErrorsRoutes) => set({ activeErrorPage: route })
 });
 
 export const useNavigationStore = createStore(devtools(store, { name }));

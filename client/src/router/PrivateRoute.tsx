@@ -1,4 +1,5 @@
 import { Navigate, Outlet } from 'react-router-dom';
+
 import { RootRoutes } from './routes';
 
 const PrivateRoute = () => {

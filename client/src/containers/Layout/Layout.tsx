@@ -1,17 +1,17 @@
 import { AppBar, Box, Toolbar, Typography } from '@mui/material';
 import React, { PropsWithChildren } from 'react';
 
-interface Props {}
+import { Profile } from 'features/authentication';
 
-const Layout: React.FC<PropsWithChildren<Props>> = ({ children }) => {
+const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position='static'>
+      <AppBar position="static">
         <Toolbar>
-          <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Blog platform
           </Typography>
-          {/* <Button color='inherit'>Login</Button> */}
+          <Profile />
         </Toolbar>
       </AppBar>
       <Box p={3}>{children}</Box>

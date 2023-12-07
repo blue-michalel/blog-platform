@@ -1,4 +1,4 @@
-import { CreateTime } from './utils';
+import { CreateTime } from 'services/models/createTime';
 
 export interface Post {
   content: string;

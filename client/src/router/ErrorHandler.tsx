@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Navigate } from 'react-router-dom';
 import { useNavigationStore } from 'store/navigation';
 import { useStore } from 'zustand';

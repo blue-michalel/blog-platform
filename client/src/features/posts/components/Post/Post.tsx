@@ -1,9 +1,10 @@
 import { Button, Card, CardActions, CardContent, Grid, Typography } from '@mui/material';
-import React, { useCallback } from 'react';
-import { Post as PostResponse } from 'services/models';
 import { useTime } from 'hooks';
+import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RootRoutes } from 'router/routes';
+
+import { Post as PostResponse } from '../../models/post';
 
 export interface Props {
   data: Omit<PostResponse, 'id'>;
@@ -23,16 +24,16 @@ const Post: React.FC<Props> = React.memo(({ data, id }) => {
     <Grid pt={2}>
       <Card>
         <CardContent>
-          <Typography variant='h6' component='h1' gutterBottom>
+          <Typography variant="h6" component="h1" gutterBottom>
             {data.title}
           </Typography>
-          <Typography variant='subtitle1' color='textSecondary'>
+          <Typography variant="subtitle1" color="textSecondary">
             Author Name - {time}
           </Typography>
-          <Typography variant='body1'>{data.short}</Typography>
+          <Typography variant="body1">{data.short}</Typography>
         </CardContent>
         <CardActions>
-          <Button size='small' onClick={onClick}>
+          <Button size="small" onClick={onClick}>
             Read more
           </Button>
         </CardActions>

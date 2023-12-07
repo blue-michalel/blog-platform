@@ -16,17 +16,17 @@ const Page404: React.FC = React.memo(() => {
   }, [clearError, navigate]);
 
   return (
-    <Grid container justifyContent='center' alignItems='center' direction='column'>
-      <Typography variant='h1' align='center' gutterBottom>
+    <Grid container justifyContent="center" alignItems="center" direction="column">
+      <Typography variant="h1" align="center" gutterBottom>
         404
       </Typography>
-      <Typography variant='h4' align='center' paragraph>
+      <Typography variant="h4" align="center" paragraph>
         Oops! Page not found.
       </Typography>
-      <Typography variant='body1' align='center' paragraph>
+      <Typography variant="body1" align="center" paragraph>
         The page you are looking for might be under construction or does not exist.
       </Typography>
-      <Button onClick={() => handleClick()} variant='contained' color='primary'>
+      <Button onClick={() => handleClick()} variant="contained" color="primary">
         Go to Home
       </Button>
     </Grid>
