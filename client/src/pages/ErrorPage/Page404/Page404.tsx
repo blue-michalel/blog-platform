@@ -1,10 +1,11 @@
 import { Button, Grid, Typography } from '@mui/material';
-import { withLayout } from 'containers/Layout';
 import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RootRoutes } from 'router/routes';
-import { useNavigationStore } from 'store/navigation';
 import { useStore } from 'zustand';
+
+import { withLayout } from 'containers/Layout';
+import { useStore as useNavigationStore } from 'store/navigation';
 
 const Page404: React.FC = React.memo(() => {
   const { clearError } = useStore(useNavigationStore);

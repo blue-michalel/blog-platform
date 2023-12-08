@@ -9,12 +9,16 @@ import { SetState, State } from './types';
 
 const name = '@store/user';
 
-const loginAction = (set: SetState) => (command: LoginCommand) =>
-  createAsyncAction(set)(async () => {
-    const { data } = await authenticationApi.login(command);
+const loginAction = (set: SetState) => (command: LoginCommand, onSuccess: () => void, onError: () => void) =>
+  createAsyncAction(set)(
+    async () => {
+      const { data } = await authenticationApi.login(command);
 
-    console.log('data', { data });
-  });
+      console.log('data', { data });
+    },
+    onError,
+    onSuccess
+  );
 
 const store = (set: SetState): State => ({
   loading: false,

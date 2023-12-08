@@ -1,9 +1,10 @@
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Avatar, Box, Button, CircularProgress, TextField, Typography } from '@mui/material';
-import { FormikHelpers, useFormik } from 'formik';
-import React, { useCallback } from 'react';
+import { useFormik } from 'formik';
+import React from 'react';
 import * as yup from 'yup';
 
+import { useLogin } from './hooks';
 import { LoginCommand } from './models/login-command';
 
 const validationSchema = yup.object({
@@ -17,10 +18,7 @@ const initialValues: LoginCommand = {
 };
 
 const SignIn: React.FC = React.memo(() => {
-  const onSubmit = useCallback((values: LoginCommand, helpers: FormikHelpers<LoginCommand>) => {
-    console.log('values', values);
-    console.log('helpers', helpers);
-  }, []);
+  const { onSubmit } = useLogin();
 
   const formik = useFormik({
     initialValues,
@@ -73,7 +71,7 @@ const SignIn: React.FC = React.memo(() => {
           error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={formik.touched.password && formik.errors.password}
         />
-        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} disabled={formik.isSubmitting}>
           {formik.isSubmitting ? <CircularProgress size={24} color="inherit" /> : 'Sign In '}
         </Button>
         {/* <Grid container>

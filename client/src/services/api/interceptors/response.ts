@@ -1,12 +1,13 @@
 import { AxiosError, AxiosResponse } from 'axios';
 import { ErrorsRoutes } from 'router/routes';
-import { useNavigationStore } from 'store/navigation';
+
+import { useStore } from 'store/navigation';
 
 export const responseInterceptor = (response: AxiosResponse) => {
   return response;
 };
 
-const { redirectToError } = useNavigationStore.getState();
+const { redirectToError } = useStore.getState();
 
 export const responseErrorInterceptor = () => async (error: AxiosError) => {
   switch (error.response?.status) {

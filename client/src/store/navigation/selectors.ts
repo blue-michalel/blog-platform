@@ -1,4 +1,4 @@
-import { NavigationState } from './navigation';
+import { NavigationState } from './store';
 
 export const selectActiveErrorPage = (state: NavigationState) => state.activeErrorPage;
 

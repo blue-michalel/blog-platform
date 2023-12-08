@@ -1,7 +1,8 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { useNavigationStore } from 'store/navigation';
 import { useStore } from 'zustand';
+
+import { useStore as useNavigationStore } from 'store/navigation';
 
 const ErrorHandler: React.FC = () => {
   const { activeErrorPage } = useStore(useNavigationStore);

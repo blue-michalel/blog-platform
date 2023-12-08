@@ -18,4 +18,4 @@ const store = (set: SetState): NavigationState => ({
   redirectToError: (route: ErrorsRoutes) => set({ activeErrorPage: route })
 });
 
-export const useNavigationStore = createStore(devtools(store, { name }));
+export const useStore = createStore(devtools(store, { name }));
